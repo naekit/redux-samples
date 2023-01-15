@@ -5,13 +5,18 @@ import { useState } from "react"
 const Counter = () => {
 	const [amount, setAmount] = useState(1)
 	const value = useSelector((state) => state.counter)
+	const visibility = useSelector((state) => state.visible)
 	const dispatch = useDispatch()
 
-	const toggleCounterHandler = () => {
+	const toggleDeviationHandler = () => {
 		if (amount === 10) {
 			setAmount(0)
 		}
 		setAmount((prevState) => prevState + 1)
+	}
+
+	const toggleCounterHandler = () => {
+		dispatch({ type: "toggle" })
 	}
 
 	const increaseHandler = () => {
@@ -23,12 +28,15 @@ const Counter = () => {
 	return (
 		<main className={classes.counter}>
 			<h1>Redux Counter</h1>
-			<div className={classes.value}>{value}</div>
+			{visibility && <div className={classes.value}>{value}</div>}
 			<button onClick={decreaseHandler}>decrease</button>
-			<button onClick={toggleCounterHandler}>
+			<button onClick={toggleDeviationHandler}>
 				Toggle Deviation: {amount}
 			</button>
 			<button onClick={increaseHandler}>increase</button>
+			<div>
+				<button onClick={toggleCounterHandler}>Toggle Counter</button>
+			</div>
 		</main>
 	)
 }
